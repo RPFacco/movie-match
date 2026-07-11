@@ -1,6 +1,5 @@
 package com.rpfacco.moviematch.domain.watchedmovie;
 
-import com.rpfacco.moviematch.domain.movie.Movie;
 import com.rpfacco.moviematch.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,7 @@ public class WatchedMovie {
     @GeneratedValue
     private UUID id;
 
+    private String title;
     private Double rating;
     private String review;
     private LocalDate watchedAt;
@@ -31,9 +31,5 @@ public class WatchedMovie {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
 
 }

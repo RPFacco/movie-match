@@ -5,5 +5,5 @@ CREATE TABLE watched_movie (
     review TEXT,
     watched_at DATE NOT NULL,
     favorite BOOLEAN NOT NULL DEFAULT FALSE,
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id UUID NOT NULL REFERENCES users(id)
 );
