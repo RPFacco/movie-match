@@ -9,6 +9,7 @@ import com.rpfacco.moviematch.repository.WatchedMovieRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +37,12 @@ public class WatchedMovieService {
         WatchedMovie savedWatchedMovie = watchedMovieRepository.save(newWatchedMovie);
 
         return toResponseDTO(savedWatchedMovie);
+    }
+
+    public List<WatchedMovieResponseDTO> findAllWatchedMoviesByUser(UUID userId) {
+        return watchedMovieRepository.findAllByUserId(userId).stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
     private WatchedMovieResponseDTO toResponseDTO(WatchedMovie watchedMovie) {

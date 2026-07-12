@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +25,11 @@ public class WatchedMovieController {
             @RequestBody WatchedMovieRequestDTO data,
             @RequestParam UUID userId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(watchedMovieService.createWatchedMovie(data, userId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<WatchedMovieResponseDTO>> findAll(@RequestParam UUID userId) {
+        return ResponseEntity.ok(watchedMovieService.findAllWatchedMoviesByUser(userId));
     }
 
 }
