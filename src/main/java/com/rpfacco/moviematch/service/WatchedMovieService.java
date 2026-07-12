@@ -28,14 +28,9 @@ public class WatchedMovieService {
 
         WatchedMovie newWatchedMovie = new WatchedMovie();
         newWatchedMovie.setUser(user);
-        newWatchedMovie.setTitle(data.title());
-        newWatchedMovie.setRating(data.rating());
-        newWatchedMovie.setReview(data.review());
-        newWatchedMovie.setWatchedAt(data.watchedAt());
-        newWatchedMovie.setFavorite(data.favorite());
+        applyData(newWatchedMovie, data);
 
         WatchedMovie savedWatchedMovie = watchedMovieRepository.save(newWatchedMovie);
-
         return toResponseDTO(savedWatchedMovie);
     }
 
@@ -43,6 +38,23 @@ public class WatchedMovieService {
         return watchedMovieRepository.findAllByUserId(userId).stream()
                 .map(this::toResponseDTO)
                 .toList();
+    }
+
+    public WatchedMovieResponseDTO updateWatchedMovie(WatchedMovieRequestDTO data, UUID userId) {
+        WatchedMovie watchedMovie = watchedMovieRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
+
+        applyData(watchedMovie, data);
+
+        WatchedMovie updatedWatchedMovie = watchedMovieRepository.save(watchedMovie);
+        return toResponseDTO(updatedWatchedMovie);
+    }
+
+    private void applyData(WatchedMovie watchedMovie, WatchedMovieRequestDTO data) {
+        watchedMovie.setTitle(data.title());
+        watchedMovie.setRating(data.rating());
+        watchedMovie.setReview(data.review());
+        watchedMovie.setWatchedAt(data.watchedAt());
+        watchedMovie.setFavorite(data.favorite());
     }
 
     private WatchedMovieResponseDTO toResponseDTO(WatchedMovie watchedMovie) {

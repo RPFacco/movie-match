@@ -32,4 +32,11 @@ public class WatchedMovieController {
         return ResponseEntity.ok(watchedMovieService.findAllWatchedMoviesByUser(userId));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<WatchedMovieResponseDTO> update(
+            @RequestBody WatchedMovieRequestDTO data,
+            @PathVariable UUID id) {
+        return ResponseEntity.ok(watchedMovieService.updateWatchedMovie(data, id));
+    }
+
 }
