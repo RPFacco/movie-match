@@ -49,6 +49,10 @@ public class WatchedMovieService {
         return toResponseDTO(updatedWatchedMovie);
     }
 
+    public void deleteWatchedMovie(UUID id) {
+        watchedMovieRepository.deleteById(id);
+    }
+
     private void applyData(WatchedMovie watchedMovie, WatchedMovieRequestDTO data) {
         watchedMovie.setTitle(data.title());
         watchedMovie.setRating(data.rating());

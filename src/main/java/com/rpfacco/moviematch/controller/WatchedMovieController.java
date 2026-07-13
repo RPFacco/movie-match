@@ -39,4 +39,9 @@ public class WatchedMovieController {
         return ResponseEntity.ok(watchedMovieService.updateWatchedMovie(data, id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        watchedMovieService.deleteWatchedMovie(id);
+        return ResponseEntity.noContent().build();
+    }
 }
