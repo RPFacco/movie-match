@@ -1,7 +1,7 @@
 package com.rpfacco.moviematch.controller;
 
-import com.rpfacco.moviematch.domain.movie.dto.MovieRequestDTO;
-import com.rpfacco.moviematch.domain.movie.dto.MovieResponseDTO;
+import com.rpfacco.moviematch.domain.recommendation.dto.MovieRecommendationRequestDTO;
+import com.rpfacco.moviematch.domain.recommendation.dto.MovieRecommendationResponseDTO;
 import com.rpfacco.moviematch.service.MovieRecommendationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +22,7 @@ public class MovieRecommendationController {
     }
 
     @PostMapping
-    public ResponseEntity<List<MovieResponseDTO>> recommend(@RequestBody MovieRequestDTO data) {
+    public ResponseEntity<List<MovieRecommendationResponseDTO>> recommend(@RequestBody MovieRecommendationRequestDTO data) {
         return ResponseEntity.ok(movieRecommendationService.recommend(data));
     }
 

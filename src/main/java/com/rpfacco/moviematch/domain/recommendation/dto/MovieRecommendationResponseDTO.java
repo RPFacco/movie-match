@@ -1,9 +1,9 @@
-package com.rpfacco.moviematch.domain.movie.dto;
+package com.rpfacco.moviematch.domain.recommendation.dto;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record MovieResponseDTO(
+public record MovieRecommendationResponseDTO(
         Long tmdbId,
         String title,
         String overview,

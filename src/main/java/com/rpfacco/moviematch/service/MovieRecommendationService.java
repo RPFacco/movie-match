@@ -3,8 +3,8 @@ package com.rpfacco.moviematch.service;
 import com.rpfacco.moviematch.client.TmdbClient;
 import com.rpfacco.moviematch.client.dto.TmdbDiscoverResponseDTO;
 import com.rpfacco.moviematch.client.dto.TmdbMovieDTO;
-import com.rpfacco.moviematch.domain.movie.dto.MovieRequestDTO;
-import com.rpfacco.moviematch.domain.movie.dto.MovieResponseDTO;
+import com.rpfacco.moviematch.domain.recommendation.dto.MovieRecommendationRequestDTO;
+import com.rpfacco.moviematch.domain.recommendation.dto.MovieRecommendationResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,16 +19,16 @@ public class MovieRecommendationService {
         this.tmdbClient = tmdbClient;
     }
 
-    public List<MovieResponseDTO> recommend(MovieRequestDTO data) {
+    public List<MovieRecommendationResponseDTO> recommend(MovieRecommendationRequestDTO data) {
         TmdbDiscoverResponseDTO tmdbResponse = tmdbClient.discoverMovies(data.genreIds(), data.minScore());
 
         return tmdbResponse.results().stream()
-                .map(this::toMovieResponseDTO)
+                .map(this::toMovieRecommendationResponseDTO)
                 .toList();
     }
 
-    private MovieResponseDTO toMovieResponseDTO(TmdbMovieDTO tmdbMovie) {
-        return new MovieResponseDTO(
+    private MovieRecommendationResponseDTO toMovieRecommendationResponseDTO(TmdbMovieDTO tmdbMovie) {
+        return new MovieRecommendationResponseDTO(
                 tmdbMovie.id(),
                 tmdbMovie.title(),
                 tmdbMovie.overview(),
