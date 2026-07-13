@@ -40,8 +40,8 @@ public class WatchedMovieService {
                 .toList();
     }
 
-    public WatchedMovieResponseDTO updateWatchedMovie(WatchedMovieRequestDTO data, UUID userId) {
-        WatchedMovie watchedMovie = watchedMovieRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
+    public WatchedMovieResponseDTO updateWatchedMovie(WatchedMovieRequestDTO data, UUID id) {
+        WatchedMovie watchedMovie = watchedMovieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
 
         applyData(watchedMovie, data);
 
