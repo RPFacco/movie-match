@@ -10,5 +10,5 @@ public record MovieRecommendationResponseDTO(
         LocalDate releaseDate,
         Double tmdbScore,
         String posterPath,
-        List<Long> genreIds
+        List<String> genres
 ) {}

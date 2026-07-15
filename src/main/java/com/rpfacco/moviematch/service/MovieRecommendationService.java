@@ -1,6 +1,7 @@
 package com.rpfacco.moviematch.service;
 
 import com.rpfacco.moviematch.client.TmdbClient;
+import com.rpfacco.moviematch.client.TmdbGenre;
 import com.rpfacco.moviematch.client.dto.TmdbDiscoverResponseDTO;
 import com.rpfacco.moviematch.client.dto.TmdbMovieDTO;
 import com.rpfacco.moviematch.domain.recommendation.dto.MovieRecommendationRequestDTO;
@@ -20,7 +21,11 @@ public class MovieRecommendationService {
     }
 
     public List<MovieRecommendationResponseDTO> recommend(MovieRecommendationRequestDTO data) {
-        TmdbDiscoverResponseDTO tmdbResponse = tmdbClient.discoverMovies(data.genreIds(), data.minScore());
+        List<Long> genreIds = data.genres().stream()
+                .map(TmdbGenre::getTmdbId)
+                .toList();
+
+        TmdbDiscoverResponseDTO tmdbResponse = tmdbClient.discoverMovies(genreIds, data.minScore());
 
         return tmdbResponse.results().stream()
                 .map(this::toMovieRecommendationResponseDTO)
@@ -28,6 +33,10 @@ public class MovieRecommendationService {
     }
 
     private MovieRecommendationResponseDTO toMovieRecommendationResponseDTO(TmdbMovieDTO tmdbMovie) {
+        List<String> genreNames = tmdbMovie.genreIds().stream()
+                .map(TmdbGenre::nameFor)
+                .toList();
+
         return new MovieRecommendationResponseDTO(
                 tmdbMovie.id(),
                 tmdbMovie.title(),
@@ -37,7 +46,7 @@ public class MovieRecommendationService {
                         : LocalDate.parse(tmdbMovie.releaseDate()),
                 tmdbMovie.voteAverage(),
                 tmdbMovie.posterPath(),
-                tmdbMovie.genreIds()
+                genreNames
         );
     }
 }
