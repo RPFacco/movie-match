@@ -1,4 +1,4 @@
-package com.rpfacco.moviematch.exception;
+/* package com.rpfacco.moviematch.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -37,4 +37,4 @@ public class GlobalExceptionHandler {
                 "message", message
         ));
     }
-}
+} */
