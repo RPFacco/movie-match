@@ -37,13 +37,14 @@ public class WatchedMovieController {
     @PutMapping("/{id}")
     public ResponseEntity<WatchedMovieResponseDTO> update(
             @RequestBody WatchedMovieRequestDTO data,
-            @PathVariable UUID id) {
-        return ResponseEntity.ok(watchedMovieService.updateWatchedMovie(data, id));
+            @PathVariable UUID id,
+            @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(watchedMovieService.updateWatchedMovie(data, id, user.getId()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        watchedMovieService.deleteWatchedMovie(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id, @AuthenticationPrincipal User user) {
+        watchedMovieService.deleteWatchedMovie(id, user.getId());
         return ResponseEntity.noContent().build();
     }
 }

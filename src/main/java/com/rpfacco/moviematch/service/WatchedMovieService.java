@@ -7,6 +7,7 @@ import com.rpfacco.moviematch.domain.watchedmovie.dto.WatchedMovieResponseDTO;
 import com.rpfacco.moviematch.repository.UserRepository;
 import com.rpfacco.moviematch.repository.WatchedMovieRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +41,11 @@ public class WatchedMovieService {
                 .toList();
     }
 
-    public WatchedMovieResponseDTO updateWatchedMovie(WatchedMovieRequestDTO data, UUID id) {
-        WatchedMovie watchedMovie = watchedMovieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
+    public WatchedMovieResponseDTO updateWatchedMovie(WatchedMovieRequestDTO data, UUID id, UUID userId) {
+        WatchedMovie watchedMovie = watchedMovieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
+
+        validateOwnership(watchedMovie, userId);
 
         applyData(watchedMovie, data);
 
@@ -49,8 +53,19 @@ public class WatchedMovieService {
         return toResponseDTO(updatedWatchedMovie);
     }
 
-    public void deleteWatchedMovie(UUID id) {
+    public void deleteWatchedMovie(UUID id, UUID userId) {
+        WatchedMovie watchedMovie = watchedMovieRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Filme assistido nao encontrado"));
+
+        validateOwnership(watchedMovie, userId);
+
         watchedMovieRepository.deleteById(id);
+    }
+
+    private void validateOwnership(WatchedMovie watchedMovie, UUID userId) {
+        if (!watchedMovie.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Voce nao tem permissao para acessar este recurso");
+        }
     }
 
     private void applyData(WatchedMovie watchedMovie, WatchedMovieRequestDTO data) {
