@@ -7,7 +7,7 @@
 ![Flyway](https://img.shields.io/badge/Flyway-Migrations-CC0200?logo=flyway)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger)
 
-[English README](README.en.md)
+[English README](README-en.md)
 
 API desenvolvida em Java com Spring Boot. O usuário pode solicitar recomendações de filmes e séries, obtendo dados da TMDB (The Movie Database) de acordo com o gênero e a nota mínima especificados, além de gerenciar os filmes/séries assistidos por meio de um CRUD.
 
